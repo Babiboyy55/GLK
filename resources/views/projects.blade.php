@@ -1,83 +1,211 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="mx-auto w-full max-w-6xl px-5 py-16">
-    <div class="space-y-4">
-        <p class="text-sm uppercase tracking-[0.3em] text-black/50">Dự án tiêu biểu</p>
-        <h1 class="text-4xl md:text-5xl font-display">Hồ sơ công trình đã thực hiện</h1>
-        <p class="text-black/70 max-w-3xl">Dự án được phân nhóm theo loại hình để thuận tiện tra cứu: Cầu/đường cao tốc, nhà máy công nghiệp và khu đô thị - dân cư.</p>
-    </div>
+@php
+$title = 'Dự án tiêu biểu - Gia Lộc Khang';
 
-    {{-- Khai báo Alpine.js với dữ liệu động --}}
-    <div x-data="{ tab: 'bridge', modalOpen: false, modalImage: '', modalName: '' }" 
-         class="mt-10 space-y-6" 
-         @keydown.escape.window="modalOpen = false">
-        
-        <div class="flex flex-wrap gap-3">
-            <button @click="tab = 'bridge'" :class="tab === 'bridge' ? 'bg-brand text-white' : 'bg-white'" class="rounded-full border border-black/15 px-5 py-2 font-semibold transition">Cầu / Đường cao tốc</button>
-            <button @click="tab = 'factory'" :class="tab === 'factory' ? 'bg-brand text-white' : 'bg-white'" class="rounded-full border border-black/15 px-5 py-2 font-semibold transition">Nhà máy công nghiệp</button>
-            <button @click="tab = 'urban'" :class="tab === 'urban' ? 'bg-brand text-white' : 'bg-white'" class="rounded-full border border-black/15 px-5 py-2 font-semibold transition">Khu đô thị - dân cư</button>
+// Dữ liệu dự án thực tế từ HSNL Gia Lộc Khang
+$portfolioProjects = [
+[
+'id' => 1,
+'name' => 'Đường Vành Đai Phía Bắc Ninh Thuận',
+'category_id' => 'giao-thong',
+'category_name' => 'Cầu & Đường Giao Thông',
+'client' => 'Sở GTVT Ninh Thuận',
+'image' => '/images/Picture5.png'
+],
+[
+'id' => 2,
+'name' => 'KĐT Biển Bình Sơn - Ninh Chữ',
+'category_id' => 'ha-tang',
+'category_name' => 'Hạ Tầng & Thủy Lợi',
+'client' => 'Ban QLDA Tỉnh Ninh Thuận',
+'image' => '/images/Picture6.png'
+],
+[
+'id' => 3,
+'name' => 'Nhà Máy Điện Mặt Trời Phước Thái',
+'category_id' => 'cong-nghiep',
+'category_name' => 'Công Nghiệp & Dân Dụng',
+'client' => 'Tập đoàn EVN',
+'image' => '/images/Picture7.png'
+],
+[
+'id' => 4,
+'name' => 'Cải Tạo Tuyến Tránh QL.1 Phan Rang',
+'category_id' => 'giao-thong',
+'category_name' => 'Cầu & Đường Giao Thông',
+'client' => 'Bộ Giao Thông Vận Tải',
+'image' => '/images/Picture5.png'
+],
+[
+'id' => 5,
+'name' => 'Hệ Thống Thủy Lợi Sông Cái',
+'category_id' => 'ha-tang',
+'category_name' => 'Hạ Tầng & Thủy Lợi',
+'client' => 'Sở NN & PTNT',
+'image' => '/images/Picture6.png'
+],
+[
+'id' => 6,
+'name' => 'Đường Văn Lâm – Sơn Hải',
+'category_id' => 'giao-thong',
+'category_name' => 'Cầu & Đường Giao Thông',
+'client' => 'UBND Tỉnh Ninh Thuận',
+'image' => '/images/Picture7.png'
+],
+[
+'id' => 7,
+'name' => 'Hạ Tầng Khu Công Nghiệp Thành Hải',
+'category_id' => 'cong-nghiep',
+'category_name' => 'Công Nghiệp & Dân Dụng',
+'client' => 'Ban Quản Lý KCN',
+'image' => '/images/Picture5.png'
+],
+[
+'id' => 8,
+'name' => 'Nâng Cấp Hệ Thống Kênh Tấn Tài',
+'category_id' => 'ha-tang',
+'category_name' => 'Hạ Tầng & Thủy Lợi',
+'client' => 'Sở NN & PTNT',
+'image' => '/images/Picture6.png'
+]
+];
+@endphp
+
+<section class="relative w-full h-[40vh] min-h-[300px] bg-[#003366] overflow-hidden">
+    <img src="{{ asset('images/banner.jpg') }}" alt="Dự án Gia Lộc Khang" class="absolute inset-0 w-full h-full object-cover opacity-30">
+    <div class="absolute inset-0 bg-gradient-to-t from-[#003366] to-transparent"></div>
+    <div class="relative max-w-7xl mx-auto px-4 h-full flex flex-col justify-end pb-12">
+        <p class="text-[#E27121] font-bold tracking-[0.3em] uppercase mb-2">Hồ Sơ Năng Lực</p>
+        <h1 class="text-4xl md:text-5xl font-black text-white uppercase tracking-wide">Dự Án Tiêu Biểu</h1>
+    </div>
+</section>
+
+<section class="py-16 bg-gray-50 min-h-screen"
+    x-data="{ 
+             currentTab: 'all', 
+             modalOpen: false, 
+             modalImage: '', 
+             modalName: '', 
+             modalClient: '',
+             openModal(img, name, client) {
+                 this.modalImage = img;
+                 this.modalName = name;
+                 this.modalClient = client;
+                 this.modalOpen = true;
+                 document.body.style.overflow = 'hidden'; // Khóa cuộn trang khi mở modal
+             },
+             closeModal() {
+                 this.modalOpen = false;
+                 document.body.style.overflow = ''; // Mở lại cuộn trang
+             }
+         }"
+    @keydown.escape.window="closeModal()">
+
+    <div class="max-w-7xl mx-auto px-4">
+
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <h2 class="text-[#003366] text-3xl font-black uppercase mb-4">Các Công Trình Đã Thực Hiện</h2>
+            <p class="text-gray-600 leading-relaxed text-lg">
+                Hơn 10 năm qua, Gia Lộc Khang tự hào ghi dấu ấn tại hàng loạt dự án trọng điểm khu vực Miền Trung, đáp ứng tiêu chuẩn kỹ thuật khắt khe và tiến độ thi công thần tốc.
+            </p>
+            <div class="w-24 h-1 bg-[#E27121] mx-auto mt-6"></div>
         </div>
 
-        {{-- Lặp qua 3 danh mục dự án --}}
-        @foreach(['bridge', 'factory', 'urban'] as $cat)
-            <div x-show="tab === '{{ $cat }}'" x-transition class="grid gap-6 md:grid-cols-2">
-                @forelse ($projects->where('category', $cat) as $project)
-                    <button
-                        type="button"
-                        @click="modalOpen = true; modalImage = '{{ asset('images/' . $project->image) }}'; modalName = '{{ $project->title }}'"
-                        class="group rounded-3xl border border-black/10 bg-white overflow-hidden shadow-soft text-left transition hover:shadow-lg">
-                        
-                        <div class="relative overflow-hidden aspect-[4/3]">
-                            <img src="{{ asset('images/' . $project->image) }}" 
-                                 alt="{{ $project->title }}" 
-                                 class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
-                            <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
-                                <span class="bg-white/90 text-black px-4 py-2 rounded-full text-sm font-semibold">Xem ảnh lớn</span>
-                            </div>
-                        </div>
+        <div class="flex flex-wrap justify-center gap-3 mb-12">
+            <button @click="currentTab = 'all'"
+                :class="currentTab === 'all' ? 'bg-[#E27121] text-white border-[#E27121] shadow-md' : 'bg-white text-[#003366] border-gray-200 hover:border-[#003366]'"
+                class="rounded-full border px-6 py-2.5 font-bold uppercase text-sm transition-all duration-300">
+                Tất cả dự án
+            </button>
+            <button @click="currentTab = 'giao-thong'"
+                :class="currentTab === 'giao-thong' ? 'bg-[#E27121] text-white border-[#E27121] shadow-md' : 'bg-white text-[#003366] border-gray-200 hover:border-[#003366]'"
+                class="rounded-full border px-6 py-2.5 font-bold uppercase text-sm transition-all duration-300">
+                Giao Thông
+            </button>
+            <button @click="currentTab = 'ha-tang'"
+                :class="currentTab === 'ha-tang' ? 'bg-[#E27121] text-white border-[#E27121] shadow-md' : 'bg-white text-[#003366] border-gray-200 hover:border-[#003366]'"
+                class="rounded-full border px-6 py-2.5 font-bold uppercase text-sm transition-all duration-300">
+                Hạ Tầng & Thủy Lợi
+            </button>
+            <button @click="currentTab = 'cong-nghiep'"
+                :class="currentTab === 'cong-nghiep' ? 'bg-[#E27121] text-white border-[#E27121] shadow-md' : 'bg-white text-[#003366] border-gray-200 hover:border-[#003366]'"
+                class="rounded-full border px-6 py-2.5 font-bold uppercase text-sm transition-all duration-300">
+                Công Nghiệp & Dân Dụng
+            </button>
+        </div>
 
-                        <div class="p-5">
-                            <h3 class="font-display text-2xl text-ink">{{ $project->title }}</h3>
-                            <p class="mt-2 text-sm text-black/60">
-                                <i class="fa-solid fa-location-dot mr-1"></i> {{ $project->location }} 
-                                <span class="mx-1">·</span> 
-                                <i class="fa-solid fa-calendar-days mr-1"></i> {{ $project->year }}
-                            </p>
-                            <p class="mt-3 text-sm text-black/70 leading-relaxed">{{ $project->summary }}</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @foreach ($portfolioProjects as $project)
+            <div x-show="currentTab === 'all' || currentTab === '{{ $project['category_id'] }}'"
+                x-transition:enter="transition ease-out duration-500"
+                x-transition:enter-start="opacity-0 transform scale-95"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition duration-500 border border-gray-100 cursor-pointer flex flex-col"
+                @click="openModal('{{ asset($project['image']) }}', '{{ $project['name'] }}', '{{ $project['client'] }}')">
+
+                <div class="relative h-64 overflow-hidden">
+                    <img src="{{ asset($project['image']) }}" onerror="this.src='{{ asset('images/banner.jpg') }}'" alt="{{ $project['name'] }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+
+                    <div class="absolute inset-0 bg-[#003366]/60 opacity-0 group-hover:opacity-100 transition duration-500 flex items-center justify-center">
+                        <div class="w-16 h-16 bg-[#E27121] text-white rounded-full flex items-center justify-center text-2xl transform scale-50 group-hover:scale-100 transition duration-500 delay-100">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
                         </div>
-                    </button>
-                @empty
-                    <div class="col-span-2 py-12 text-center bg-stone/30 rounded-3xl border border-dashed border-black/10">
-                        <p class="text-black/40 italic">Hiện chưa có dữ liệu cho mục này.</p>
                     </div>
-                @endforelse
-            </div>
-        @endforeach
 
-        {{-- Modal xem ảnh lớn (Giữ nguyên logic của bạn) --}}
-        <div x-show="modalOpen" 
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0"
-             x-transition:enter-end="opacity-100"
-             x-transition:leave="transition ease-in duration-200"
-             x-transition:leave-start="opacity-100"
-             x-transition:leave-end="opacity-0"
-             class="fixed inset-0 z-[90] flex items-center justify-center p-4 sm:p-6" 
-             style="display: none;">
-            
-            <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" @click="modalOpen = false"></div>
-            
-            <div class="relative z-10 w-full max-w-5xl rounded-2xl bg-white p-2 shadow-2xl" @click.stop>
-                <button type="button" 
-                        class="absolute -top-12 right-0 h-10 w-10 text-white text-4xl hover:text-brand transition"
-                        @click="modalOpen = false">&times;</button>
-                
-                <img :src="modalImage" :alt="modalName" class="max-h-[80vh] w-full rounded-xl object-contain bg-black/5">
-                <div class="px-4 py-3 flex justify-between items-center">
-                    <p class="font-display text-lg text-ink" x-text="modalName"></p>
-                    <span class="text-xs text-black/40 uppercase tracking-widest">Hoàng Gia Việt Nam</span>
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur text-[#003366] text-xs font-bold px-3 py-1.5 uppercase rounded shadow-sm">
+                        {{ $project['category_name'] }}
+                    </div>
                 </div>
+
+                <div class="p-6 flex-1 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-black text-[#003366] uppercase mb-2 group-hover:text-[#E27121] transition-colors line-clamp-2">
+                            {{ $project['name'] }}
+                        </h3>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center gap-2 text-sm text-gray-500 font-medium">
+                        <i class="fa-solid fa-building-user text-[#E27121]"></i>
+                        <span>CĐT: {{ $project['client'] }}</span>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+
+    </div>
+
+    <div x-show="modalOpen"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
+        style="display: none;">
+
+        <div class="absolute inset-0 bg-[#003366]/90 backdrop-blur-sm" @click="closeModal()"></div>
+
+        <div class="relative z-10 w-full max-w-5xl bg-white rounded-xl shadow-2xl flex flex-col overflow-hidden" @click.stop>
+
+            <button type="button"
+                class="absolute top-4 right-4 z-20 w-10 h-10 bg-black/50 hover:bg-[#E27121] text-white rounded-full flex items-center justify-center text-xl transition-colors"
+                @click="closeModal()" aria-label="Đóng">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="w-full bg-gray-100 flex items-center justify-center overflow-hidden h-[50vh] md:h-[70vh]">
+                <img :src="modalImage" :alt="modalName" class="max-w-full max-h-full object-contain">
+            </div>
+
+            <div class="p-5 md:p-6 bg-white border-t border-gray-200">
+                <h3 class="font-black text-xl md:text-2xl text-[#003366] uppercase" x-text="modalName"></h3>
+                <p class="text-gray-500 mt-2 font-medium flex items-center gap-2">
+                    <i class="fa-solid fa-building-user text-[#E27121]"></i>
+                    Chủ đầu tư: <span x-text="modalClient"></span>
+                </p>
             </div>
         </div>
     </div>

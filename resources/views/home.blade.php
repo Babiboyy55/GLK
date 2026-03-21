@@ -2,263 +2,350 @@
 
 @section('content')
 @php
-$heroSlides = [
-['/images/Picture1.png', 'Khảo sát địa kỹ thuật công trình'],
-['/images/Picture2.png', 'Thí nghiệm hiện trường và trong phòng'],
-['/images/Picture3.png', 'Tư vấn giải pháp nền móng và hạ tầng'],
-['/images/Picture4.png', 'Kiểm định vật liệu xây dựng'],
-];
-
-$featuredServices = [
+// DATA DỊCH VỤ
+$services = [
 [
-'title' => 'Khoan khảo sát địa chất',
-'desc' => 'Khoan thăm dò, lấy mẫu, xác định điều kiện địa tầng phục vụ thiết kế móng.',
+'title' => 'THI CÔNG CẦU ĐƯỜNG',
+'desc' => 'Thi công các tuyến đường vành đai, cao tốc, quốc lộ và nút giao thông trọng điểm.',
+'icon' => 'fa-bridge',
 ],
 [
-'title' => 'Thí nghiệm hiện trường / trong phòng',
-'desc' => 'Thực hiện các phép thử cơ lý đất, đá và thí nghiệm hiện trường theo tiêu chuẩn áp dụng.',
+'title' => 'THI CÔNG HẠ TẦNG',
+'desc' => 'San lấp mặt bằng, xây dựng hạ tầng khu dân cư, khu công nghiệp và hệ thống thủy lợi.',
+'icon' => 'fa-city',
 ],
 [
-'title' => 'Khảo sát địa hình',
-'desc' => 'Đo đạc, lập bình đồ, cao độ và hồ sơ địa hình phục vụ quy hoạch - thi công.',
-],
-[
-'title' => 'Thí nghiệm vật liệu xây dựng',
-'desc' => 'Kiểm tra chất lượng vật liệu đầu vào và cấu kiện theo quy chuẩn hiện hành.',
+'title' => 'XÂY DỰNG DÂN DỤNG',
+'desc' => 'Thi công nhà ở, công trình thương mại, đảm bảo an toàn, chất lượng và tiến độ.',
+'icon' => 'fa-building',
 ],
 ];
 
-$featuredProjects = [
-['Cầu Kim Liên', '/images/Picture5.png'],
-['Nhà máy Up Shine Lighting', '/images/Picture6.png'],
-['Dự án pin TOPCON BOVIET', '/images/Picture7.png'],
-['Cầu sông Hương', '/images/Picture8.png'],
+// DATA DỰ ÁN TỪ HSNL
+$portfolioProjects = [
+[
+'name' => 'Đường Vành Đai Phía Bắc',
+'image' => '/images/Picture5.png',
+'tag' => 'Giao thông'
+],
+[
+'name' => 'KĐT Biển Bình Sơn Ninh Chữ',
+'image' => '/images/Picture6.png',
+'tag' => 'Hạ tầng'
+],
+[
+'name' => 'Nhà Máy Điện Phước Thái',
+'image' => '/images/Picture7.png',
+'tag' => 'Công nghiệp'
+],
+[
+'name' => 'Cải Tạo Tuyến Tránh QL.1',
+'image' => '/images/Picture5.png',
+'tag' => 'Giao thông'
+],
+[
+'name' => 'Hệ Thống Thủy Lợi Sông Cái',
+'image' => '/images/Picture6.png',
+'tag' => 'Thủy lợi'
+],
 ];
 @endphp
 
-<section class="relative overflow-hidden border-b border-black/10">
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(208,114,45,0.2),_transparent_60%)]"></div>
-    <div class="relative mx-auto w-full max-w-6xl px-5 py-14 lg:py-20">
-        <div class="space-y-5 max-w-3xl">
-            <p class="text-sm uppercase tracking-[0.3em] text-black/60">Công ty Cổ phần Địa kỹ thuật Hoàng Gia Việt Nam</p>
-            <h1 class="text-4xl md:text-5xl lg:text-5xl font-display text-gray-900">
-                Địa Chất Hoàng Gia Việt Nam:
-                <span class="block mt-1 italic text-center text-gray-800">Chuẩn dữ liệu – Vững hạ tầng.</span>
+<style>
+    .custom-scrollbar::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f1f5f9;
+        border-radius: 10px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #003366;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #E27121;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Hỗ trợ cuộn mượt khi bấm menu */
+</style>
+
+<section class="relative w-full h-[85vh] min-h-[600px] bg-[#003366] overflow-hidden">
+    <img src="{{ asset('images/banner.jpg') }}" alt="Gia Lộc Khang Banner" class="absolute inset-0 w-full h-full object-cover opacity-70">
+    <div class="absolute inset-0 bg-gradient-to-r from-[#003366] via-[#003366]/80 to-transparent"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 h-full flex items-center">
+        <div class="max-w-3xl text-white">
+            <p class="text-sm md:text-base font-bold tracking-[0.3em] uppercase mb-4 border-l-4 border-[#E27121] pl-4">
+                Công ty TNHH Xây Dựng Gia Lộc Khang
+            </p>
+            <h1 class="text-4xl md:text-6xl font-black uppercase leading-[1.4] md:leading-[1.5] tracking-wide mb-6 pb-2 italic">
+                XÂY DỰNG <span class="text-[#E27121]">UY TÍN -</span> <br>
+                <span class="text-[#E27121]"> KIẾN TẠO BỀN </span>VỮNG
             </h1>
-        </div>
-        <p class="text-base md:text-lg text-black/70">
-            Thành lập năm 2011, Hoàng Gia Việt Nam hoạt động với mã LAS-XD 1109 trong các lĩnh vực khảo sát,
-            thí nghiệm và kiểm định, đồng hành cùng chủ đầu tư và nhà thầu trong các dự án hạ tầng, dân dụng, công nghiệp.
-        </p>
-        <div class="flex flex-wrap gap-3 text-sm font-medium">
-            <span class="rounded-full bg-white px-4 py-2 border border-black/10">Chính xác</span>
-            <span class="rounded-full bg-white px-4 py-2 border border-black/10">An toàn</span>
-            <span class="rounded-full bg-white px-4 py-2 border border-black/10">Hiệu quả</span>
-            <span class="rounded-full bg-white px-4 py-2 border border-black/10">Bền vững</span>
+            <p class="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl leading-relaxed">
+                GIẢI PHÁP TỐT NHẤT CHO GIAO THÔNG & CÔNG TRÌNH.
+            </p>
+            <div class="flex flex-wrap gap-4">
+                <a href="#phan-du-an" class="bg-[#E27121] hover:bg-orange-600 text-white font-bold uppercase py-3 px-8 rounded transition duration-300">
+                    Xem Dự Án
+                </a>
+                <a href="/lien-he" class="bg-transparent border-2 border-white hover:bg-white hover:text-[#003366] text-white font-bold uppercase py-3 px-8 rounded transition duration-300">
+                    Liên Hệ Ngay
+                </a>
+            </div>
         </div>
     </div>
+</section>
 
-    <div class="mt-8 overflow-x-auto no-scrollbar">
-        <div class="flex gap-4 min-w-max">
-            @foreach ($heroSlides as [$image, $caption])
-            <article class="w-[80vw] max-w-[560px] rounded-3xl overflow-hidden border border-black/10 bg-white shadow-soft">
-                <img src="{{ $image }}" alt="{{ $caption }}" class="aspect-[16/9] w-full object-cover">
-                <p class="p-4 text-sm font-medium">{{ $caption }}</p>
-            </article>
+<section class="bg-[#003366] text-white border-b-4 border-[#E27121] sticky top-[72px] z-40 shadow-lg hidden md:block">
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-3 text-center divide-x divide-white/20">
+        <a href="#phan-gioi-thieu" class="py-4 font-bold uppercase tracking-wider hover:bg-white/10 transition">Về Chúng Tôi</a>
+        <a href="#phan-dich-vu" class="py-4 font-bold uppercase tracking-wider hover:bg-white/10 transition">Lĩnh Vực Hoạt Động</a>
+        <a href="#phan-du-an" class="py-4 font-bold uppercase tracking-wider hover:bg-white/10 transition">Dự Án Tiêu Biểu</a>
+    </div>
+</section>
+
+<section id="phan-gioi-thieu" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="space-y-6">
+            <h4 class="text-[#E27121] font-bold uppercase tracking-widest text-sm">Về Gia Lộc Khang</h4>
+            <h2 class="text-[#003366] text-3xl md:text-4xl font-black uppercase leading-tight">
+                Nền tảng vững chắc <br> cho mọi công trình
+            </h2>
+            <p class="text-gray-600 leading-relaxed text-justify">
+                Được thành lập từ năm 2014, Công ty TNHH Xây dựng Gia Lộc Khang đã nhanh chóng khẳng định vị thế trong lĩnh vực thi công hạ tầng giao thông, thủy lợi và dân dụng.
+            </p>
+            <p class="text-gray-600 leading-relaxed text-justify">
+                Sở hữu đội ngũ kỹ sư lành nghề cùng hệ thống máy móc, thiết bị thi công cơ giới hiện đại, chúng tôi cam kết mang đến những công trình đạt chuẩn kỹ thuật, đúng tiến độ và an toàn tuyệt đối cho các Chủ đầu tư.
+            </p>
+            <ul class="space-y-3 mt-4 text-[#003366] font-semibold">
+                <li class="flex items-center gap-3"><i class="fa-solid fa-check text-[#E27121]"></i> Cam kết chất lượng & tiến độ</li>
+                <li class="flex items-center gap-3"><i class="fa-solid fa-check text-[#E27121]"></i> Năng lực thiết bị hiện đại</li>
+                <li class="flex items-center gap-3"><i class="fa-solid fa-check text-[#E27121]"></i> Đội ngũ nhân sự chuyên môn cao</li>
+            </ul>
+        </div>
+        <div class="grid grid-cols-2 gap-6">
+            <div class="bg-gray-50 border-t-4 border-[#003366] p-8 text-center shadow-sm hover:shadow-md transition">
+                <div class="text-5xl font-black text-[#003366] mb-2">10+</div>
+                <div class="text-gray-500 font-bold uppercase text-sm tracking-wide">Năm Kinh Nghiệm</div>
+            </div>
+            <div class="bg-gray-50 border-t-4 border-[#E27121] p-8 text-center shadow-sm hover:shadow-md transition mt-6">
+                <div class="text-5xl font-black text-[#003366] mb-2">23+</div>
+                <div class="text-gray-500 font-bold uppercase text-sm tracking-wide">Dự Án Tiêu Biểu</div>
+            </div>
+            <div class="bg-gray-50 border-t-4 border-[#E27121] p-8 text-center shadow-sm hover:shadow-md transition -mt-6">
+                <div class="text-5xl font-black text-[#003366] mb-2">150+</div>
+                <div class="text-gray-500 font-bold uppercase text-sm tracking-wide">Nhân Sự & Kỹ Sư</div>
+            </div>
+            <div class="bg-gray-50 border-t-4 border-[#003366] p-8 text-center shadow-sm hover:shadow-md transition">
+                <div class="text-5xl font-black text-[#003366] mb-2">100%</div>
+                <div class="text-gray-500 font-bold uppercase text-sm tracking-wide">Đảm Bảo Tiến Độ</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="phan-dich-vu" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-16">
+            <h4 class="text-[#E27121] font-bold uppercase tracking-widest text-sm mb-2">Dịch Vụ Cốt Lõi</h4>
+            <h2 class="text-[#003366] text-3xl md:text-4xl font-black uppercase">LĨNH VỰC HOẠT ĐỘNG</h2>
+            <div class="w-24 h-1 bg-[#E27121] mx-auto mt-6"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            @foreach ($services as $service)
+            <div class="bg-white p-10 text-center border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition duration-300 group">
+                <div class="w-20 h-20 mx-auto bg-[#003366] text-white rounded-full flex items-center justify-center text-3xl mb-6 group-hover:bg-[#E27121] transition-colors">
+                    <i class="fa-solid {{ $service['icon'] }}"></i>
+                </div>
+                <h3 class="text-xl font-black text-[#003366] uppercase mb-4 tracking-wide">{{ $service['title'] }}</h3>
+                <p class="text-gray-600">{{ $service['desc'] }}</p>
+            </div>
             @endforeach
         </div>
     </div>
-
-    <div class="mt-8 flex flex-wrap gap-4">
-        <a href="/dich-vu" class="inline-flex items-center justify-center rounded-full bg-brand px-6 py-3 text-white font-semibold">Xem lĩnh vực hoạt động</a>
-        <a href="/lien-he" class="inline-flex items-center justify-center rounded-full border border-black/20 px-6 py-3 font-semibold">Liên hệ nhận hồ sơ năng lực</a>
-    </div>
-    </div>
 </section>
 
-<section class="mx-auto w-full max-w-6xl px-5 py-14">
-    <div class="flex items-end justify-between gap-6">
-        <div>
-            <p class="text-sm uppercase tracking-[0.3em] text-black/50">Dịch vụ / Lĩnh vực hoạt động</p>
-            <h2 class="text-3xl md:text-4xl font-display">Dịch vụ nổi bật</h2>
-        </div>
-    </div>
-    <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        @foreach ($featuredServices as $service)
-        <article class="rounded-3xl border border-black/10 bg-white p-6 shadow-soft">
-            <div class="h-11 w-11 rounded-2xl bg-brand/15 grid place-items-center text-brand font-semibold">{{ $loop->iteration }}</div>
-            <h3 class="mt-4 text-xl font-display">{{ $service['title'] }}</h3>
-            <p class="mt-3 text-sm text-black/70">{{ $service['desc'] }}</p>
-        </article>
-        @endforeach
-    </div>
-</section>
-
-<section class="bg-[color:var(--color-ink)] text-white">
-    <div class="mx-auto w-full max-w-6xl px-5 py-16 grid gap-10 lg:grid-cols-[1fr_1fr] items-center">
-        <div class="space-y-4">
-            <p class="text-sm uppercase tracking-[0.3em] text-white/60">Năng lực thiết bị</p>
-            <h2 class="text-3xl md:text-4xl font-display">Thiết bị và chứng nhận nổi bật</h2>
-            <p class="text-white/70">
-                Hệ thống máy khoan XY-1, thiết bị xuyên tĩnh CPT cùng quy trình kiểm soát chất lượng chặt chẽ giúp dữ liệu
-                khảo sát và thí nghiệm luôn có độ tin cậy cao, phục vụ thiết kế và thi công an toàn.
-            </p>
-            <div class="grid gap-4 text-sm">
-                <a href="{{ route('certificates') }}#xy1" class="block rounded-2xl border border-white/15 p-4 transition hover:border-white/40 hover:bg-white/5">
-                    <p class="font-semibold">Máy thử độ bền nén TYE-2000</p>
-                    <p class="text-white/70 mt-1">Thực hiện thí nghiệm xác định cường độ chịu nén của các mẫu vật liệu xây dựng với độ chính xác cao.</p>
-                </a>
-                <a href="{{ route('certificates') }}#maycatdat" class="block rounded-2xl border border-white/15 p-4 transition hover:border-white/40 hover:bg-white/5">
-                    <p class="font-semibold">Máy cắt đất ZJ</p>
-                    <p class="text-white/70 mt-1">Thiết bị chuyên dụng để xác định nhanh chóng và tin cậy các đặc trưng sức chống cắt của nền đất.</p>
-                </a>
+<section id="phan-du-an" class="py-20 bg-white border-t border-gray-100">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex flex-wrap items-end justify-between mb-12 gap-4">
+            <div>
+                <h4 class="text-[#E27121] font-bold uppercase tracking-widest text-sm mb-2">Hồ Sơ Năng Lực</h4>
+                <h2 class="text-[#003366] text-3xl md:text-4xl font-black uppercase">DỰ ÁN TIÊU BIỂU</h2>
             </div>
-        </div>
-        <div class="rounded-[32px] bg-white/5 p-8 grid gap-5">
-            <a href="{{ route('certificates') }}" class="block rounded-3xl bg-white/10 p-6 transition hover:bg-white/15">
-                <p class="text-xs uppercase tracking-[0.3em] text-white/60">Chứng chỉ</p>
-                <p class="mt-2 font-display text-2xl">ISO & LAS-XD 1109</p>
-                <p class="mt-2 text-white/70 text-sm">Hệ thống quản lý và năng lực phòng thí nghiệm theo phạm vi được cấp phép.</p>
+            <a href="/du-an" class="text-[#003366] font-bold hover:text-[#E27121] flex items-center gap-2 transition">
+                Xem toàn bộ dự án <i class="fa-solid fa-arrow-right-long"></i>
             </a>
-            <div class="rounded-3xl bg-white/10 p-6">
-                <p class="text-xs uppercase tracking-[0.3em] text-white/60">Cam kết</p>
-                <p class="mt-2 font-display text-2xl">Chính xác - An toàn - Hiệu quả - Bền vững</p>
-                <p class="mt-2 text-white/70 text-sm">Bộ tiêu chí xuyên suốt trong mọi hoạt động khảo sát và thí nghiệm.</p>
+        </div>
+
+        <div class="relative group" data-carousel>
+            <button type="button" class="absolute -left-5 top-1/2 -translate-y-1/2 z-10 h-12 w-12 rounded-full bg-[#003366] text-white shadow-xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-[#E27121]" data-carousel-prev>
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <button type="button" class="absolute -right-5 top-1/2 -translate-y-1/2 z-10 h-12 w-12 rounded-full bg-[#003366] text-white shadow-xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-[#E27121]" data-carousel-next>
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+            <div class="flex flex-nowrap gap-6 overflow-x-auto snap-x snap-mandatory custom-scrollbar cursor-grab scroll-smooth pb-6" data-carousel-track>
+                @foreach ($portfolioProjects as $project)
+                <div class="flex-none w-[85%] md:w-[400px] snap-start group/item cursor-pointer">
+                    <div class="relative overflow-hidden rounded-t-lg">
+                        <img src="{{ $project['image'] }}" alt="{{ $project['name'] }}" class="w-full h-[250px] object-cover group-hover/item:scale-110 transition duration-700 pointer-events-none">
+                        <div class="absolute top-4 left-4 bg-[#E27121] text-white text-xs font-bold px-3 py-1 uppercase rounded-sm shadow">
+                            {{ $project['tag'] }}
+                        </div>
+                    </div>
+                    <div class="bg-[#003366] text-white p-5 rounded-b-lg border-t-4 border-[#E27121]">
+                        <h3 class="font-bold text-lg uppercase truncate">{{ $project['name'] }}</h3>
+                    </div>
+                </div>
+                @endforeach
             </div>
         </div>
     </div>
 </section>
 
-<section class="mx-auto w-full max-w-6xl px-5 py-16">
-    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-        <div>
-            <p class="text-sm uppercase tracking-[0.3em] text-black/50">Dự án tiêu biểu</p>
-            <h2 class="text-3xl md:text-4xl font-display">Các công trình đã thực hiện</h2>
+<section id="phan-tin-tuc" class="py-20 bg-gray-50 border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-16">
+            <h4 class="text-[#E27121] font-bold uppercase tracking-widest text-sm mb-2">Cập nhật mới nhất</h4>
+            <h2 class="text-[#003366] text-3xl md:text-4xl font-black uppercase">TIN TỨC HOẠT ĐỘNG</h2>
+            <div class="w-24 h-1 bg-[#E27121] mx-auto mt-6"></div>
         </div>
-        <a href="/du-an" class="text-sm font-semibold text-brand">Xem tất cả dự án</a>
-    </div>
-    <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        @foreach ($featuredProjects as [$projectName, $image])
-        <button
-            type="button"
-            class="group rounded-3xl overflow-hidden bg-white border border-black/10 shadow-soft text-left"
-            data-project-image="{{ $image }}"
-            data-project-name="{{ $projectName }}"
-            aria-label="Xem ảnh lớn dự án {{ $projectName }}">
-            <img src="{{ $image }}" alt="{{ $projectName }}" class="aspect-[4/3] w-full object-cover transition duration-300 group-hover:scale-[1.02]">
-            <div class="p-4">
-                <h3 class="font-display text-xl">{{ $projectName }}</h3>
-                <p class="mt-2 text-sm text-black/60">Bấm để xem ảnh lớn</p>
-            </div>
-        </button>
-        @endforeach
-    </div>
 
-    <div id="project-image-modal" class="fixed inset-0 z-[80] hidden items-center justify-center p-4 sm:p-6">
-        <button type="button" class="absolute inset-0 bg-black/75" data-project-close aria-label="Đóng xem ảnh"></button>
-        <div class="relative z-10 w-full max-w-5xl rounded-2xl bg-white p-2 shadow-2xl">
-            <button
-                type="button"
-                class="absolute right-3 top-3 h-10 w-10 rounded-full bg-black/75 text-white text-2xl leading-none"
-                data-project-close
-                aria-label="Đóng">
-                &times;
-            </button>
-            <img id="project-image-modal-img" src="" alt="" class="max-h-[80vh] w-full rounded-xl object-contain bg-black/5">
-            <p id="project-image-modal-caption" class="px-3 py-2 text-sm text-black/70"></p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white shadow-sm border border-gray-100 group overflow-hidden cursor-pointer">
+                <div class="overflow-hidden">
+                    <img src="{{ asset('images/Picture7.png') }}" class="w-full h-[300px] object-cover group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="p-6 md:p-8">
+                    <div class="text-[#E27121] text-sm font-bold mb-3"><i class="fa-regular fa-calendar-days mr-2"></i> 20/07/2024</div>
+                    <h3 class="text-2xl font-bold text-[#003366] mb-4 hover:text-[#E27121] transition">Khởi công dự án Đường vành đai phía Bắc Ninh Thuận</h3>
+                    <p class="text-gray-600 line-clamp-3">Gia Lộc Khang vinh dự được chọn làm nhà thầu thi công gói hạ tầng giao thông trọng điểm, kết nối tuyến quốc lộ 27...</p>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-8">
+                <div class="flex bg-white shadow-sm border border-gray-100 group overflow-hidden cursor-pointer h-full">
+                    <div class="w-2/5 overflow-hidden">
+                        <img src="{{ asset('images/Picture5.png') }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="w-3/5 p-5 flex flex-col justify-center">
+                        <div class="text-[#E27121] text-xs font-bold mb-2"><i class="fa-regular fa-calendar-days mr-2"></i> 15/06/2024</div>
+                        <h3 class="text-lg font-bold text-[#003366] mb-2 hover:text-[#E27121] transition line-clamp-2">Đẩy nhanh tiến độ thi công trước mùa mưa bão</h3>
+                    </div>
+                </div>
+
+                <div class="flex bg-white shadow-sm border border-gray-100 group overflow-hidden cursor-pointer h-full">
+                    <div class="w-2/5 overflow-hidden">
+                        <img src="{{ asset('images/Picture6.png') }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="w-3/5 p-5 flex flex-col justify-center">
+                        <div class="text-[#E27121] text-xs font-bold mb-2"><i class="fa-regular fa-calendar-days mr-2"></i> 10/05/2024</div>
+                        <h3 class="text-lg font-bold text-[#003366] mb-2 hover:text-[#E27121] transition line-clamp-2">Nghiệm thu đưa vào sử dụng công trình KCN Thành Hải</h3>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const modal = document.getElementById('project-image-modal');
-        const modalImage = document.getElementById('project-image-modal-img');
-        const modalCaption = document.getElementById('project-image-modal-caption');
-        const openButtons = document.querySelectorAll('[data-project-image]');
-        const closeButtons = document.querySelectorAll('[data-project-close]');
+        const carousels = document.querySelectorAll('[data-carousel]');
 
-        if (!modal || !modalImage || !modalCaption || openButtons.length === 0) {
-            return;
-        }
+        carousels.forEach(carousel => {
+            const track = carousel.querySelector('[data-carousel-track]');
+            const btnPrev = carousel.querySelector('[data-carousel-prev]');
+            const btnNext = carousel.querySelector('[data-carousel-next]');
 
-        const openModal = function(image, name) {
-            modalImage.src = image;
-            modalImage.alt = name;
-            modalCaption.textContent = name;
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            document.body.classList.add('overflow-hidden');
-        };
+            if (!track) return;
 
-        const closeModal = function() {
-            modal.classList.remove('flex');
-            modal.classList.add('hidden');
-            modalImage.src = '';
-            modalImage.alt = '';
-            modalCaption.textContent = '';
-            document.body.classList.remove('overflow-hidden');
-        };
+            const updateButtons = () => {
+                if (!btnPrev || !btnNext) return;
+                const maxScrollLeft = track.scrollWidth - track.clientWidth;
 
-        openButtons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                openModal(button.dataset.projectImage, button.dataset.projectName);
-            });
-        });
+                if (track.scrollLeft <= 5) {
+                    btnPrev.classList.add('hidden');
+                } else {
+                    btnPrev.classList.remove('hidden');
+                }
 
-        closeButtons.forEach(function(button) {
-            button.addEventListener('click', closeModal);
-        });
+                if (Math.ceil(track.scrollLeft) >= maxScrollLeft - 5) {
+                    btnNext.classList.add('hidden');
+                } else {
+                    btnNext.classList.remove('hidden');
+                }
+            };
 
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape' && modal.classList.contains('flex')) {
-                closeModal();
+            if (btnPrev) {
+                btnPrev.addEventListener('click', () => {
+                    track.scrollBy({
+                        left: -(track.clientWidth * 0.8),
+                        behavior: 'smooth'
+                    });
+                });
             }
+
+            if (btnNext) {
+                btnNext.addEventListener('click', () => {
+                    track.scrollBy({
+                        left: track.clientWidth * 0.8,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            track.addEventListener('mousedown', (e) => {
+                isDown = true;
+                track.classList.add('cursor-grabbing');
+                track.classList.remove('cursor-grab');
+                track.style.scrollBehavior = 'auto';
+                startX = e.pageX - track.offsetLeft;
+                scrollLeft = track.scrollLeft;
+            });
+
+            track.addEventListener('mouseleave', () => {
+                isDown = false;
+                track.classList.remove('cursor-grabbing');
+                track.classList.add('cursor-grab');
+                track.style.scrollBehavior = 'smooth';
+            });
+
+            track.addEventListener('mouseup', () => {
+                isDown = false;
+                track.classList.remove('cursor-grabbing');
+                track.classList.add('cursor-grab');
+                track.style.scrollBehavior = 'smooth';
+            });
+
+            track.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - track.offsetLeft;
+                const walk = (x - startX) * 2;
+                track.scrollLeft = scrollLeft - walk;
+            });
+
+            track.addEventListener('scroll', updateButtons);
+            window.addEventListener('resize', updateButtons);
+            updateButtons();
         });
     });
 </script>
-
-<section class="mx-auto w-full max-w-6xl px-5 py-16">
-    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-        <div>
-            <p class="text-sm uppercase tracking-[0.3em] text-black/50">Góc tin tức</p>
-            <h2 class="text-3xl md:text-4xl font-display">Bài viết mới nhất</h2>
-        </div>
-        <a href="/tin-tuc" class="text-sm font-semibold text-brand">Xem tất cả</a>
-    </div>
-    <div class="mt-8 grid gap-6 md:grid-cols-3">
-        @forelse ($latestPosts ?? [] as $item)
-        <a href="{{ route('posts.show', $item->slug) }}" class="rounded-3xl border border-black/10 bg-white overflow-hidden shadow-soft">
-            {{-- SỬA LOGIC HIỂN THỊ ẢNH TẠI ĐÂY --}}
-            @if ($item->featured_image)
-            @php
-            $img = $item->featured_image;
-            // Kiểm tra nếu là URL hoặc chứa 'images/' thì dùng asset() trực tiếp, ngược lại thêm 'images/'
-            $imagePath = (str_starts_with($img, 'http') || str_contains($img, 'images/'))
-            ? asset($img)
-            : asset('images/' . $img);
-            @endphp
-            <img src="{{ $imagePath }}"
-                alt="{{ $item->title }}"
-                class="aspect-[4/3] w-full object-cover transition duration-300 hover:scale-105"
-                onerror="this.onerror=null;this.src='{{ asset('images/main-logo.png') }}';">
-            @else
-            <div class="aspect-[4/3] bg-[linear-gradient(120deg,_#f3d3bf,_#f9f2e7)] flex items-center justify-center">
-                <i class="fa fa-image text-black/10 text-4xl"></i>
-            </div>
-            @endif
-
-            <div class="p-5">
-                <p class="text-xs uppercase tracking-[0.3em] text-black/50">Tin mới</p>
-                <h3 class="mt-2 font-display text-xl">{{ $item->title }}</h3>
-                <p class="mt-2 text-sm text-black/60">{{ \Illuminate\Support\Str::limit(strip_tags($item->excerpt ?: $item->content), 120) }}</p>
-            </div>
-        </a>
-        @empty
-        <div class="rounded-3xl border border-black/10 bg-white p-6 text-sm text-black/60 col-span-3 text-center">
-            Chưa có bài viết. Hãy thêm bài viết để hiển thị tại đây.
-        </div>
-        @endforelse
-    </div>
-</section>
 @endsection

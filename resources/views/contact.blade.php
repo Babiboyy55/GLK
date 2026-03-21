@@ -1,67 +1,122 @@
 @extends('layouts.app')
 
 @section('content')
-    @php
-        $title = 'Liên hệ';
-    @endphp
+@php
+$title = 'Liên hệ - Gia Lộc Khang';
+@endphp
 
-    <section class="mx-auto w-full max-w-6xl px-5 py-16">
-        <div class="grid gap-10 lg:grid-cols-[1fr_0.9fr]">
-            <div>
-                <p class="text-sm uppercase tracking-[0.3em] text-black/50">Liên hệ</p>
-                <h1 class="text-4xl md:text-5xl font-display">Kết nối với Hoàng Gia Việt Nam</h1>
-                <p class="mt-4 text-black/70">Vui lòng để lại thông tin để nhận tư vấn khảo sát, thí nghiệm, báo giá và hồ
-                    sơ năng lực. Chúng tôi phản hồi trong 24 giờ làm việc.</p>
+<section class="relative w-full h-[40vh] min-h-[300px] bg-[#003366] overflow-hidden">
+    <img src="{{ asset('images/banner.jpg') }}" alt="Liên hệ Gia Lộc Khang" class="absolute inset-0 w-full h-full object-cover opacity-30">
+    <div class="absolute inset-0 bg-gradient-to-t from-[#003366] to-transparent"></div>
+    <div class="relative max-w-7xl mx-auto px-4 h-full flex flex-col justify-end pb-12">
+        <p class="text-[#E27121] font-bold tracking-[0.3em] uppercase mb-2">Kết nối với chúng tôi</p>
+        <h1 class="text-4xl md:text-5xl font-black text-white uppercase tracking-wide">Liên Hệ & Báo Giá</h1>
+    </div>
+</section>
 
-                <form action="{{ route('contact.store') }}" method="POST" class="mt-8 grid gap-4">
-                    @csrf 
-                    @if(session('success'))
-                        <div class="rounded-xl bg-green-100 p-4 text-green-700 font-medium">
-                            {{ session('success') }}
-                        </div>
-                    @endif
+<section class="py-16 md:py-24 bg-gray-50 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 grid gap-12 lg:grid-cols-[1.2fr_1fr] items-start">
 
-                    <div class="grid gap-4 md:grid-cols-2">
-                        <input name="name" class="rounded-2xl border border-black/10 bg-white px-4 py-3"
-                            placeholder="Họ và tên" type="text" required>
-                        <input name="phone" class="rounded-2xl border border-black/10 bg-white px-4 py-3"
-                            placeholder="Số điện thoại" type="tel" required>
-                    </div>
-                    <input name="email" class="rounded-2xl border border-black/10 bg-white px-4 py-3" placeholder="Email"
-                        type="email" required>
-                    <textarea name="message" class="rounded-2xl border border-black/10 bg-white px-4 py-3" rows="5"
-                        placeholder="Nội dung yêu cầu" required></textarea>
+        <div class="bg-white p-8 md:p-10 rounded-2xl shadow-lg border border-gray-100">
+            <h2 class="text-[#003366] text-3xl font-black uppercase mb-3">Gửi Yêu Cầu Tư Vấn</h2>
+            <p class="text-gray-600 mb-8 leading-relaxed">
+                Đội ngũ kỹ sư của Gia Lộc Khang luôn sẵn sàng tiếp nhận yêu cầu khảo sát, lập biện pháp thi công và báo giá chi tiết cho dự án của bạn. Chúng tôi sẽ phản hồi trong vòng 24 giờ.
+            </p>
 
-                    <button
-                        class="inline-flex items-center justify-center rounded-full bg-brand px-6 py-3 text-white font-semibold transition hover:opacity-90"
-                        type="submit">
-                        Gửi yêu cầu
-                    </button>
-                </form>
-            </div>
-            <div class="space-y-6">
-                <div class="rounded-3xl bg-stone p-6">
-                    <h3 class="font-display text-2xl">Thông tin liên hệ</h3>
-                    <p class="mt-3 text-sm text-black/70">Công ty Cổ phần Địa kỹ thuật Hoàng Gia Việt Nam</p>
-                    <p class="text-sm text-black/70">Địa chỉ: Số 55 Cầu Cốn, P. Trần Hưng Đạo, TP Hải Dương, Tỉnh Hải Dương
-                    </p>
-                    <p class="text-sm text-black/70">0982 461 026</p>
-                    <p class="text-sm text-black/70">Hientvxd7217@gmail.com</p>
+            <form action="{{ route('contact.store') }}" method="POST" class="grid gap-6">
+                @csrf
+
+                {{-- Thông báo thành công --}}
+                @if(session('success'))
+                <div class="rounded-lg bg-green-50 border border-green-200 p-4 text-green-700 font-bold flex items-center gap-3">
+                    <i class="fa-solid fa-circle-check text-xl"></i>
+                    {{ session('success') }}
                 </div>
-                <div class="rounded-3xl bg-[linear-gradient(135deg,_#f3d3bf,_#f9f2e7)] p-6">
-                    <p class="text-sm uppercase tracking-[0.3em] text-black/50">Bản đồ</p>
-                    <div class="mt-4 overflow-hidden rounded-2xl border border-black/10 bg-white">
-                        <iframe title="Bản đồ văn phòng Hoàng Gia Việt Nam" class="h-[320px] w-full"
-                            src="https://maps.google.com/maps?q=S%E1%BB%91%2055%20C%E1%BA%A7u%20C%E1%BB%91n%2C%20P.%20Tr%E1%BA%A7n%20H%C6%B0ng%20%C4%90%E1%BA%A1o%2C%20TP%20H%E1%BA%A3i%20D%C6%B0%C6%A1ng%2C%20T%E1%BB%89nh%20H%E1%BA%A3i%20D%C6%B0%C6%A1ng&z=17&output=embed"
-                            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                @endif
+
+                <div class="grid gap-6 md:grid-cols-2">
+                    <div class="space-y-2">
+                        <label class="text-sm font-bold text-[#003366] uppercase">Họ và tên *</label>
+                        <input name="name" class="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-700 focus:border-[#E27121] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#E27121]/20 transition-all"
+                            placeholder="Nhập họ tên của bạn" type="text" required>
                     </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=S%E1%BB%91%2055%20C%E1%BA%A7u%20C%E1%BB%91n%2C%20P.%20Tr%E1%BA%A7n%20H%C6%B0ng%20%C4%90%E1%BA%A1o%2C%20TP%20H%E1%BA%A3i%20D%C6%B0%C6%A1ng%2C%20T%E1%BB%89nh%20H%E1%BA%A3i%20D%C6%B0%C6%A1ng"
-                        target="_blank" rel="noopener noreferrer"
-                        class="mt-3 inline-flex text-sm font-semibold text-brand hover:underline">
-                        Mở Google Maps
-                    </a>
+                    <div class="space-y-2">
+                        <label class="text-sm font-bold text-[#003366] uppercase">Số điện thoại *</label>
+                        <input name="phone" class="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-700 focus:border-[#E27121] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#E27121]/20 transition-all"
+                            placeholder="Nhập số điện thoại" type="tel" required>
+                    </div>
                 </div>
-            </div>
+
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-[#003366] uppercase">Email liên hệ</label>
+                    <input name="email" class="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-700 focus:border-[#E27121] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#E27121]/20 transition-all"
+                        placeholder="Nhập địa chỉ email (không bắt buộc)" type="email">
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-[#003366] uppercase">Nội dung dự án / Yêu cầu *</label>
+                    <textarea name="message" rows="5" class="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-700 focus:border-[#E27121] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#E27121]/20 transition-all resize-none"
+                        placeholder="Mô tả ngắn gọn về dự án, hạng mục cần thi công hoặc yêu cầu báo giá..." required></textarea>
+                </div>
+
+                <button type="submit" class="mt-4 w-full md:w-auto inline-flex items-center justify-center gap-3 rounded-lg bg-[#003366] hover:bg-[#E27121] px-8 py-4 text-white font-black uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-xl transform hover:-translate-y-1">
+                    <i class="fa-solid fa-paper-plane"></i> Gửi Yêu Cầu Ngay
+                </button>
+            </form>
         </div>
-    </section>
+
+        <div class="space-y-8">
+
+            <div class="bg-[#003366] rounded-2xl p-8 text-white shadow-lg relative overflow-hidden">
+                <div class="absolute right-0 top-0 w-32 h-32 bg-white opacity-5 rounded-full -mr-10 -mt-10"></div>
+
+                <h3 class="text-2xl font-black uppercase mb-6 border-b border-white/20 pb-4">Thông Tin Liên Hệ</h3>
+
+                <ul class="space-y-6">
+                    <li class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-full bg-[#E27121] flex items-center justify-center shrink-0 text-lg shadow-md">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-300 font-bold uppercase mb-1">Trụ sở chính</p>
+                            <p class="font-medium leading-relaxed">Số 84 Hòa Bình, Phường Bảo An, Tỉnh Ninh Thuận</p>
+                        </div>
+                    </li>
+
+                    <li class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-full bg-[#E27121] flex items-center justify-center shrink-0 text-lg shadow-md">
+                            <i class="fa-solid fa-phone-volume"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-300 font-bold uppercase mb-1">Hotline Ban Giám Đốc</p>
+                            <p class="font-black text-xl tracking-wider">0984.31.31.31</p>
+                            <p class="font-bold text-lg tracking-wider text-[#E27121] mt-1">0931.20.54.55</p>
+                        </div>
+                    </li>
+
+                    <li class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-full bg-[#E27121] flex items-center justify-center shrink-0 text-lg shadow-md">
+                            <i class="fa-solid fa-envelope-open-text"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-300 font-bold uppercase mb-1">Email Tiếp Nhận</p>
+                            <p class="font-medium">glk.ninhthuan@gmail.com</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 shadow-lg border border-gray-100">
+                <p class="text-sm font-bold text-[#003366] uppercase tracking-widest mb-3 ml-2"><i class="fa-solid fa-map-location-dot mr-2"></i> Bản đồ chỉ đường</p>
+                <div class="overflow-hidden rounded-xl border border-gray-200">
+                    <iframe title="Bản đồ văn phòng Gia Lộc Khang" class="h-[300px] w-full"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3902.956660682136!2d108.9739!3d11.5654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTHCsDMzJzU1LjQiTiAxMDjCsDU4JzI2LjAiRQ!5e0!3m2!1svi!2s!4v1690000000000!5m2!1svi!2s"
+                        style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
 @endsection
