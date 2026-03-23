@@ -42,7 +42,7 @@ $title = 'Về chúng tôi - Gia Lộc Khang';
         </div>
 
         <figure class="relative rounded-lg overflow-hidden shadow-2xl group">
-            <img src="{{ asset('images/Picture9.png') }}" onerror="this.src='{{ asset('images/banner.jpg') }}'" alt="Trụ sở Gia Lộc Khang" class="w-full h-[450px] object-cover group-hover:scale-105 transition duration-700">
+            <img src="{{ asset('images/banner.jpg') }}" onerror="this.src='{{ asset('images/banner.jpg') }}'" alt="Trụ sở Gia Lộc Khang" class="w-full h-[450px] object-cover group-hover:scale-105 transition duration-700">
             <div class="absolute inset-0 bg-[#003366]/20 group-hover:bg-transparent transition duration-500"></div>
             <figcaption class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#003366] to-transparent p-6 pt-12 text-white">
                 <p class="font-bold text-lg">Trụ sở Công ty Gia Lộc Khang</p>
@@ -116,10 +116,10 @@ $title = 'Về chúng tôi - Gia Lộc Khang';
         </div>
 
         <div class="grid grid-cols-2 gap-4">
-            <img src="{{ asset('images/Picture5.png') }}" class="w-full h-48 md:h-60 object-cover rounded-lg shadow-lg hover:scale-105 transition duration-500" alt="Máy móc thiết bị">
-            <img src="{{ asset('images/Picture6.png') }}" class="w-full h-48 md:h-60 object-cover rounded-lg shadow-lg mt-8 hover:scale-105 transition duration-500" alt="Thi công công trường">
-            <img src="{{ asset('images/Picture7.png') }}" class="w-full h-48 md:h-60 object-cover rounded-lg shadow-lg -mt-8 hover:scale-105 transition duration-500" alt="Dự án cầu đường">
-            <img src="{{ asset('images/Picture8.png') }}" onerror="this.src='{{ asset('images/banner.jpg') }}'" class="w-full h-48 md:h-60 object-cover rounded-lg shadow-lg hover:scale-105 transition duration-500" alt="Công nhân thi công">
+            <img src="{{ asset('images/anhcai.png') }}" class="w-full h-48 md:h-60 object-cover rounded-lg shadow-lg hover:scale-105 transition duration-500" alt="Máy móc thiết bị">
+            <img src="{{ asset('images/da1.jpg') }}" class="w-full h-48 md:h-60 object-cover rounded-lg shadow-lg mt-8 hover:scale-105 transition duration-500" alt="Thi công công trường">
+            <img src="{{ asset('images/1.png') }}" class="w-full h-48 md:h-60 object-cover rounded-lg shadow-lg -mt-8 hover:scale-105 transition duration-500" alt="Dự án cầu đường">
+            <img src="{{ asset('images/dep.png') }}" onerror="this.src='{{ asset('images/banner.jpg') }}'" class="w-full h-48 md:h-60 object-cover rounded-lg shadow-lg hover:scale-105 transition duration-500" alt="Công nhân thi công">
         </div>
     </div>
 </section>

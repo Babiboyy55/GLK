@@ -20,35 +20,6 @@ $services = [
 'icon' => 'fa-building',
 ],
 ];
-
-// DATA DỰ ÁN TỪ HSNL
-$portfolioProjects = [
-[
-'name' => 'Đường Vành Đai Phía Bắc',
-'image' => '/images/Picture5.png',
-'tag' => 'Giao thông'
-],
-[
-'name' => 'KĐT Biển Bình Sơn Ninh Chữ',
-'image' => '/images/Picture6.png',
-'tag' => 'Hạ tầng'
-],
-[
-'name' => 'Nhà Máy Điện Phước Thái',
-'image' => '/images/Picture7.png',
-'tag' => 'Công nghiệp'
-],
-[
-'name' => 'Cải Tạo Tuyến Tránh QL.1',
-'image' => '/images/Picture5.png',
-'tag' => 'Giao thông'
-],
-[
-'name' => 'Hệ Thống Thủy Lợi Sông Cái',
-'image' => '/images/Picture6.png',
-'tag' => 'Thủy lợi'
-],
-];
 @endphp
 
 <style>
@@ -198,16 +169,25 @@ $portfolioProjects = [
             </button>
 
             <div class="flex flex-nowrap gap-6 overflow-x-auto snap-x snap-mandatory custom-scrollbar cursor-grab scroll-smooth pb-6" data-carousel-track>
-                @foreach ($portfolioProjects as $project)
-                <div class="flex-none w-[85%] md:w-[400px] snap-start group/item cursor-pointer">
+                @foreach ($projectsHome as $project)
+                <div class="flex-none w-[85%] md:w-[400px] snap-start group/item cursor-pointer" onclick="window.location='{{ route('projects') }}'">
                     <div class="relative overflow-hidden rounded-t-lg">
-                        <img src="{{ $project['image'] }}" alt="{{ $project['name'] }}" class="w-full h-[250px] object-cover group-hover/item:scale-110 transition duration-700 pointer-events-none">
+                        <img src="{{ $project->image ? asset('images/' . $project->image) : asset('images/Picture5.png') }}"
+                            alt="{{ $project->title }}"
+                            class="w-full h-[250px] object-cover group-hover/item:scale-110 transition duration-700 pointer-events-none">
                         <div class="absolute top-4 left-4 bg-[#E27121] text-white text-xs font-bold px-3 py-1 uppercase rounded-sm shadow">
-                            {{ $project['tag'] }}
+                            @php
+                            $catNames = [
+                            'bridge' => 'Cầu đường',
+                            'factory' => 'Công Nghiệp',
+                            'urban' => 'Hạ Tầng / Đô thị',
+                            ];
+                            @endphp
+                            {{ $catNames[$project->category] ?? ($project->category ?? 'Dự án') }}
                         </div>
                     </div>
                     <div class="bg-[#003366] text-white p-5 rounded-b-lg border-t-4 border-[#E27121]">
-                        <h3 class="font-bold text-lg uppercase truncate">{{ $project['name'] }}</h3>
+                        <h3 class="font-bold text-lg uppercase truncate" title="{{ $project->title }}">{{ $project->title }}</h3>
                     </div>
                 </div>
                 @endforeach
@@ -225,38 +205,38 @@ $portfolioProjects = [
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="bg-white shadow-sm border border-gray-100 group overflow-hidden cursor-pointer">
+            @if(isset($latestPosts) && $latestPosts->count() > 0)
+            {{-- Tin nổi bật (Tin đầu tiên) --}}
+            <div class="bg-white shadow-sm border border-gray-100 group overflow-hidden cursor-pointer" onclick="window.location.href='{{ route('posts.show', $latestPosts[0]->slug) }}'">
                 <div class="overflow-hidden">
-                    <img src="{{ asset('images/Picture7.png') }}" class="w-full h-[300px] object-cover group-hover:scale-105 transition duration-500">
+                    <img src="{{ $latestPosts[0]->featured_image ? asset('images/' . $latestPosts[0]->featured_image) : asset('images/Picture7.png') }}" class="w-full h-[300px] object-cover group-hover:scale-105 transition duration-500">
                 </div>
                 <div class="p-6 md:p-8">
-                    <div class="text-[#E27121] text-sm font-bold mb-3"><i class="fa-regular fa-calendar-days mr-2"></i> 20/07/2024</div>
-                    <h3 class="text-2xl font-bold text-[#003366] mb-4 hover:text-[#E27121] transition">Khởi công dự án Đường vành đai phía Bắc Ninh Thuận</h3>
-                    <p class="text-gray-600 line-clamp-3">Gia Lộc Khang vinh dự được chọn làm nhà thầu thi công gói hạ tầng giao thông trọng điểm, kết nối tuyến quốc lộ 27...</p>
+                    <div class="text-[#E27121] text-sm font-bold mb-3"><i class="fa-regular fa-calendar-days mr-2"></i> {{ $latestPosts[0]->created_at->format('d/m/Y') }}</div>
+                    <h3 class="text-2xl font-bold text-[#003366] mb-4 hover:text-[#E27121] transition">{{ $latestPosts[0]->title }}</h3>
+                    <p class="text-gray-600 line-clamp-3">{{ $latestPosts[0]->excerpt ?? Str::limit(strip_tags($latestPosts[0]->content), 150) }}</p>
                 </div>
             </div>
 
+            {{-- Các tin tiếp theo --}}
             <div class="flex flex-col gap-8">
-                <div class="flex bg-white shadow-sm border border-gray-100 group overflow-hidden cursor-pointer h-full">
+                @foreach($latestPosts->skip(1)->take(2) as $post)
+                <div class="flex bg-white shadow-sm border border-gray-100 group overflow-hidden cursor-pointer h-full" onclick="window.location.href='{{ route('posts.show', $post->slug) }}'">
                     <div class="w-2/5 overflow-hidden">
-                        <img src="{{ asset('images/Picture5.png') }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <img src="{{ $post->featured_image ? asset('images/' . $post->featured_image) : asset('images/Picture5.png') }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     </div>
                     <div class="w-3/5 p-5 flex flex-col justify-center">
-                        <div class="text-[#E27121] text-xs font-bold mb-2"><i class="fa-regular fa-calendar-days mr-2"></i> 15/06/2024</div>
-                        <h3 class="text-lg font-bold text-[#003366] mb-2 hover:text-[#E27121] transition line-clamp-2">Đẩy nhanh tiến độ thi công trước mùa mưa bão</h3>
+                        <div class="text-[#E27121] text-xs font-bold mb-2"><i class="fa-regular fa-calendar-days mr-2"></i> {{ $post->created_at->format('d/m/Y') }}</div>
+                        <h3 class="text-lg font-bold text-[#003366] mb-2 hover:text-[#E27121] transition line-clamp-2">{{ $post->title }}</h3>
                     </div>
                 </div>
-
-                <div class="flex bg-white shadow-sm border border-gray-100 group overflow-hidden cursor-pointer h-full">
-                    <div class="w-2/5 overflow-hidden">
-                        <img src="{{ asset('images/Picture6.png') }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    </div>
-                    <div class="w-3/5 p-5 flex flex-col justify-center">
-                        <div class="text-[#E27121] text-xs font-bold mb-2"><i class="fa-regular fa-calendar-days mr-2"></i> 10/05/2024</div>
-                        <h3 class="text-lg font-bold text-[#003366] mb-2 hover:text-[#E27121] transition line-clamp-2">Nghiệm thu đưa vào sử dụng công trình KCN Thành Hải</h3>
-                    </div>
-                </div>
+                @endforeach
             </div>
+            @else
+            <div class="col-span-1 md:col-span-2 text-center py-10 text-gray-500">
+                Chưa có tin tức nào.
+            </div>
+            @endif
         </div>
     </div>
 </section>

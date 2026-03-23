@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? 'Gia Lộc Khang' }}</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/logo.jpg') }}">
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=be-vietnam-pro:300,400,500,600,700,800&family=fraunces:400,500,600,700" rel="stylesheet" />
@@ -13,6 +14,18 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggle = document.querySelector('[data-menu-toggle]');
+        const menu = document.querySelector('[data-menu-target]');
+
+        if (toggle && menu) {
+            toggle.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+        }
+    });
+</script>
 
 <body class="bg-gray-50 text-gray-800 font-['Be_Vietnam_Pro']">
     <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:px-4 focus:py-2 focus:rounded-full">
@@ -52,29 +65,56 @@
                         <a href="/dich-vu" class="hover:text-[#E27121] transition-colors duration-200">Dịch vụ</a>
                         <a href="/du-an" class="hover:text-[#E27121] transition-colors duration-200">Dự án</a>
                         <a href="/tin-tuc" class="hover:text-[#E27121] transition-colors duration-200">Tin tức</a>
+
+                        <div class="relative group py-4"> <button class="flex items-center gap-1 hover:text-[#E27121] transition-colors duration-200 uppercase outline-none">
+                                Thư viện
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+
+                            <div class="absolute top-full left-1/2 -translate-x-1/2 mt-0 invisible opacity-0 group-hover:visible group-hover:opacity-100 flex flex-row bg-white shadow-2xl border-t-2 border-[#E27121] rounded-b-lg p-2 gap-2 w-max z-50 transition-all duration-300">
+
+                                <a href="/thu-vien/tieu-chuan-thi-cong" class="flex flex-col items-center justify-start p-3 hover:bg-gray-50 rounded transition-colors w-[120px] group/item">
+                                    <i class="fa-solid fa-file-contract text-3xl text-[#003366] mb-2 group-hover/item:text-[#E27121] transition-colors"></i>
+                                    <span class="text-center text-[10px] font-black text-[#003366] group-hover/item:text-[#E27121] leading-snug">TIÊU CHUẨN<br>THI CÔNG</span>
+                                </a>
+
+                                <div class="w-px bg-gray-200 my-2"></div> <a href="/thu-vien/tieu-chuan-thi-nghiem" class="flex flex-col items-center justify-start p-3 hover:bg-gray-50 rounded transition-colors w-[120px] group/item">
+                                    <i class="fa-solid fa-vial-circle-check text-3xl text-[#003366] mb-2 group-hover/item:text-[#E27121] transition-colors"></i>
+                                    <span class="text-center text-[10px] font-black text-[#003366] group-hover/item:text-[#E27121] leading-snug">TIÊU CHUẨN<br>THÍ NGHIỆM</span>
+                                </a>
+
+                                <div class="w-px bg-gray-200 my-2"></div> <a href="/thu-vien/excel-ung-dung" class="flex flex-col items-center justify-start p-3 hover:bg-gray-50 rounded transition-colors w-[120px] group/item">
+                                    <i class="fa-solid fa-file-excel text-3xl text-[#107c41] mb-2 group-hover/item:scale-110 transition-transform"></i>
+                                    <span class="text-center text-[10px] font-black text-[#003366] group-hover/item:text-[#E27121] leading-snug">EXCEL<br>ỨNG DỤNG</span>
+                                </a>
+
+                            </div>
+                        </div>
                         <a href="/lien-he" class="hover:text-[#E27121] transition-colors duration-200">Liên hệ</a>
                     </nav>
-                </div>
 
-                <div class="lg:hidden flex items-center pr-2">
-                    <button class="text-[#003366] hover:text-[#E27121] focus:outline-none" aria-label="Mở menu" data-menu-toggle>
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
+                    <div id="mobile-nav" class="lg:hidden hidden border-t border-gray-100 bg-white shadow-inner" data-menu-target>
+                        <div class="px-5 py-4 flex flex-col gap-4 text-sm font-bold uppercase tracking-wider text-[#003366]">
+                            <a href="/" class="hover:text-[#E27121]">Trang chủ</a>
+                            <a href="/gioi-thieu" class="hover:text-[#E27121]">Giới thiệu</a>
+                            <a href="/dich-vu" class="hover:text-[#E27121]">Dịch vụ</a>
+                            <a href="/du-an" class="hover:text-[#E27121]">Dự án</a>
+                            <a href="/tin-tuc" class="hover:text-[#E27121]">Tin tức</a>
 
-            <div id="mobile-nav" class="lg:hidden hidden border-t border-gray-100 bg-white shadow-inner" data-menu-target>
-                <div class="px-5 py-4 flex flex-col gap-4 text-sm font-bold uppercase tracking-wider text-[#003366]">
-                    <a href="/" class="hover:text-[#E27121]">Trang chủ</a>
-                    <a href="/gioi-thieu" class="hover:text-[#E27121]">Giới thiệu</a>
-                    <a href="/dich-vu" class="hover:text-[#E27121]">Dịch vụ</a>
-                    <a href="/du-an" class="hover:text-[#E27121]">Dự án</a>
-                    <a href="/tin-tuc" class="hover:text-[#E27121]">Tin tức</a>
-                    <a href="/lien-he" class="hover:text-[#E27121]">Liên hệ</a>
-                </div>
-            </div>
+                            <div class="flex flex-col gap-3">
+                                <span class="text-[#E27121] border-b border-gray-100 pb-1">Thư viện</span>
+                                <div class="flex flex-col gap-3 pl-4 text-xs">
+                                    <a href="/thu-vien/tieu-chuan-thi-cong" class="hover:text-[#E27121] flex items-center gap-2"><i class="fa-solid fa-file-contract w-4"></i> Tiêu chuẩn thi công</a>
+                                    <a href="/thu-vien/tieu-chuan-thi-nghiem" class="hover:text-[#E27121] flex items-center gap-2"><i class="fa-solid fa-vial-circle-check w-4"></i> Tiêu chuẩn thí nghiệm</a>
+                                    <a href="/thu-vien/excel-ung-dung" class="hover:text-[#E27121] flex items-center gap-2"><i class="fa-solid fa-file-excel w-4 text-[#107c41]"></i> Excel - Ứng dụng</a>
+                                </div>
+                            </div>
+
+                            <a href="/lien-he" class="hover:text-[#E27121]">Liên hệ</a>
+                        </div>
+                    </div>
         </header>
 
         <main id="main-content" class="flex-1">

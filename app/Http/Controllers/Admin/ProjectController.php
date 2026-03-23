@@ -9,10 +9,29 @@ use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::latest()->get();
-        return view('admin.projects.index', compact('projects'));
+        $query = Project::query();
+
+        // Lọc theo category nếu có
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        // Sắp xếp
+        $sort = $request->input('sort', 'desc');
+        $query->orderBy('created_at', $sort === 'asc' ? 'asc' : 'desc');
+
+        $projects = $query->get();
+
+        // Lấy danh sách category để render filter
+        $categories = [
+            'bridge' => 'Cầu / Đường',
+            'factory' => 'Nhà máy',
+            'urban' => 'Đô thị',
+        ];
+
+        return view('admin.projects.index', compact('projects', 'categories'));
     }
 
     public function create()

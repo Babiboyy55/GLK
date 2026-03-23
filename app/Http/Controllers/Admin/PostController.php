@@ -11,11 +11,25 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::with('category')->latest()->paginate(10);
+        $query = Post::with('category');
 
-        return view('admin.posts.index', compact('posts'));
+        // Lọc theo category nếu có
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        // Sắp xếp
+        $sort = $request->input('sort', 'desc');
+        $query->orderBy('created_at', $sort === 'asc' ? 'asc' : 'desc');
+
+        $posts = $query->paginate(10)->appends($request->all());
+
+        // Lấy danh sách category để render filter
+        $categories = \App\Models\Category::all();
+
+        return view('admin.posts.index', compact('posts', 'categories'));
     }
 
     public function create()
@@ -30,7 +44,11 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'content' => 'required',
+            'category_id' => 'required|exists:categories,id',
             'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048'
+        ], [
+            'category_id.required' => 'Vui lòng chọn danh mục bài viết.',
+            'category_id.exists' => 'Danh mục không hợp lệ.'
         ]);
 
         // 2. Tạo bài viết mới (Lúc này chưa có ảnh)

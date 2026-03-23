@@ -4,34 +4,6 @@
 @php
 $title = 'Lĩnh vực hoạt động - Gia Lộc Khang';
 
-// 4 Nhóm dịch vụ trọng điểm (Hiển thị to có ảnh minh họa)
-$coreServices = [
-[
-'title' => 'Thi Công Xây Dựng & Hạ Tầng',
-'desc' => 'Chuyên thi công các công trình đường sắt, đường bộ, công trình công nghiệp, công ích và nhà ở các loại.',
-'icon' => 'fa-building-shield',
-'image' => '/images/Picture5.png'
-],
-[
-'title' => 'Cơ Điện & Hoàn Thiện',
-'desc' => 'Lắp đặt hệ thống điện, cấp thoát nước, điều hòa không khí và hoàn thiện toàn bộ công trình xây dựng.',
-'icon' => 'fa-bolt',
-'image' => '/images/Picture6.png'
-],
-[
-'title' => 'Vật Tư & Thiết Bị Cơ Giới',
-'desc' => 'Khai thác, buôn bán vật liệu xây dựng (đá, cát, sỏi). Mua bán và cho thuê máy móc, thiết bị khai khoáng, thi công.',
-'icon' => 'fa-truck-monster',
-'image' => '/images/Picture7.png'
-],
-[
-'title' => 'Thí Nghiệm & Kiểm Định',
-'desc' => 'Thí nghiệm vật liệu, kiểm định các chỉ tiêu nền móng, kết cấu mặt đường công trình giao thông, xây dựng.',
-'icon' => 'fa-microscope',
-'image' => '/images/Picture9.png'
-]
-];
-
 // Danh sách chi tiết 15 dịch vụ kinh doanh từ Giấy phép
 $detailedServices = [
 'Xây dựng công trình đường sắt và đường bộ.',
@@ -69,21 +41,25 @@ $detailedServices = [
         </div>
 
         <div class="grid gap-8 md:grid-cols-2">
-            @foreach ($coreServices as $item)
-            <div class="flex flex-col md:flex-row bg-white rounded-xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl hover:border-[#003366]/30 transition duration-500 group">
+            @forelse ($services as $service)
+            <div class="flex flex-col md:flex-row bg-white rounded-xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl hover:border-[#003366]/30 transition duration-500 group cursor-pointer" onclick="window.location.href='{{ route('services.show', $service->slug) }}'">
                 <div class="w-full md:w-2/5 h-48 md:h-auto overflow-hidden relative">
-                    <img src="{{ asset($item['image']) }}" onerror="this.src='{{ asset('images/banner.jpg') }}'" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    <img src="{{ $service->image ? asset('images/' . $service->image) : asset('images/banner.jpg') }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
                     <div class="absolute inset-0 bg-[#003366]/20 group-hover:bg-transparent transition duration-500"></div>
                 </div>
                 <div class="w-full md:w-3/5 p-6 md:p-8 flex flex-col justify-center">
                     <div class="w-12 h-12 bg-[#003366]/10 text-[#003366] rounded-lg flex items-center justify-center text-2xl mb-4 group-hover:bg-[#E27121] group-hover:text-white transition-colors">
-                        <i class="fa-solid {{ $item['icon'] }}"></i>
+                        <i class="fa-solid {{ $service->icon ?? 'fa-building-shield' }}"></i>
                     </div>
-                    <h3 class="text-xl font-black text-[#003366] uppercase mb-3">{{ $item['title'] }}</h3>
-                    <p class="text-gray-600 leading-relaxed">{{ $item['desc'] }}</p>
+                    <h3 class="text-xl font-black text-[#003366] uppercase mb-3">{{ $service->title }}</h3>
+                    <p class="text-gray-600 leading-relaxed">{{ Str::limit(strip_tags($service->summary ?? $service->description), 120) }}</p>
                 </div>
             </div>
-            @endforeach
+            @empty
+            <div class="col-span-full text-center text-gray-500 py-10">
+                Đang cập nhật dịch vụ...
+            </div>
+            @endforelse
         </div>
     </div>
 </section>
@@ -108,43 +84,12 @@ $detailedServices = [
     </div>
 </section>
 
-<section class="py-20 bg-white border-t border-gray-100">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="text-center mb-12">
-            <h2 class="text-[#003366] text-2xl font-black uppercase">Thông Tin Hồ Sơ Dịch Vụ Mở Rộng</h2>
-            <div class="w-16 h-1 bg-[#E27121] mx-auto mt-4"></div>
-        </div>
-
-        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {{-- Vòng lặp lấy từ database của Laravel --}}
-            @forelse ($services ?? [] as $service)
-            <a href="{{ route('services.show', $service->slug ?? '#') }}" class="group block bg-gray-50 border border-gray-100 p-6 rounded-xl shadow-sm hover:shadow-xl hover:bg-[#003366] transition duration-300">
-                <div class="w-10 h-10 bg-white text-[#003366] rounded-full flex items-center justify-center text-lg mb-4 group-hover:text-[#E27121] shadow">
-                    <i class="fa-solid fa-folder-open"></i>
-                </div>
-                <h3 class="font-bold text-[#003366] group-hover:text-white transition-colors line-clamp-2 mb-2">
-                    {{ $service->title ?? 'Tên dịch vụ' }}
-                </h3>
-                <p class="text-gray-500 text-sm group-hover:text-gray-300 line-clamp-3">
-                    {{ strip_tags($service->excerpt ?? $service->description ?? 'Đọc thêm chi tiết về năng lực thi công và quy trình thực hiện...') }}
-                </p>
-            </a>
-            @empty
-            <div class="col-span-full p-8 text-center bg-gray-50 rounded-xl text-gray-500 border border-dashed border-gray-300">
-                <i class="fa-solid fa-file-contract text-4xl mb-3 text-gray-400"></i>
-                <p>Chi tiết các gói dịch vụ đang được cập nhật lên hệ thống...</p>
-            </div>
-            @endforelse
-        </div>
-    </div>
-</section>
-
 <section class="py-16 bg-[#003366] text-white relative overflow-hidden">
     <div class="absolute left-0 bottom-0 w-[500px] h-[500px] bg-white opacity-5 rounded-full -ml-40 -mb-40 pointer-events-none"></div>
     <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
         <h2 class="text-3xl font-black uppercase mb-4">Triển Khai Dự Án Cùng Gia Lộc Khang</h2>
         <p class="text-gray-300 mb-8 text-lg">Khảo sát tận nơi - Báo giá minh bạch - Cam kết tiến độ</p>
-        <a href="tel:0984313131" class="inline-flex items-center gap-3 bg-[#E27121] hover:bg-orange-600 text-white font-bold uppercase py-4 px-10 rounded shadow-xl transition transform hover:-translate-y-1">
+        <a href="/lien-he" class="inline-flex items-center gap-3 bg-[#E27121] hover:bg-orange-600 text-white font-bold uppercase py-4 px-10 rounded shadow-xl transition transform hover:-translate-y-1">
             <i class="fa-solid fa-phone-volume text-xl"></i> Yêu cầu tư vấn & báo giá
         </a>
     </div>

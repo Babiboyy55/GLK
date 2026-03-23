@@ -5,8 +5,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ServiceController;
 use App\Models\Post;
+use App\Models\Project;
 use App\Models\Service;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DocumentController;
 
 Route::get('/', function () {
     $latestPosts = Post::query()
@@ -20,9 +22,17 @@ Route::get('/', function () {
         ->limit(3)
         ->get();
 
+    $projectsHome = Project::query()
+        ->where('status', 'published')
+        ->orderByDesc('year')
+        ->orderByDesc('created_at')
+        ->limit(10)
+        ->get();
+
     return view('home', [
         'latestPosts' => $latestPosts,
         'servicesHome' => $servicesHome,
+        'projectsHome' => $projectsHome,
     ]);
 })->name('home');
 
@@ -63,7 +73,7 @@ Route::get('/danh-muc-phep-thu', function () {
     ]);
 });
 
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'role:admin|editor'])->prefix('admin')->name('admin.')->group(function () {
     Route::redirect('/', '/admin/dashboard');
 
     Route::get('/dashboard', function () {
@@ -74,9 +84,32 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('services', \App\Http\Controllers\Admin\ServiceController::class);
     Route::resource('projects', \App\Http\Controllers\Admin\ProjectController::class);
 
+    // Bọc route users lại để chỉ ADMIN mới có quyền thêm/sửa/xóa user
+    Route::middleware(['role:admin'])->group(function () {
+        Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+    });
+
     Route::resource('contacts', \App\Http\Controllers\Admin\ContactController::class)->only(['index', 'destroy']);
-    
+
     Route::post('/contacts/{id}/status', [\App\Http\Controllers\Admin\ContactController::class, 'updateStatus'])->name('contacts.updateStatus');
+
+    // Danh sách tài liệu
+    Route::get('thu-vien', [DocumentController::class, 'adminIndex'])->name('documents.index');
+
+    // Trang hiển thị Form Upload
+    Route::get('thu-vien/them-moi', [DocumentController::class, 'create'])->name('documents.create');
+
+    // Xử lý dữ liệu khi bấm nút "Tải lên"
+    Route::post('thu-vien/luu', [DocumentController::class, 'store'])->name('documents.store');
+
+    // Trang sửa tài liệu
+    Route::get('thu-vien/{document}/sua', [DocumentController::class, 'edit'])->name('documents.edit');
+
+    // Cập nhật tài liệu
+    Route::put('thu-vien/{document}', [DocumentController::class, 'update'])->name('documents.update');
+
+    // Xóa tài liệu
+    Route::delete('thu-vien/{document}', [DocumentController::class, 'destroy'])->name('documents.destroy');
 });
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -84,4 +117,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Hiển thị danh sách tài liệu theo danh mục
+Route::get('/thu-vien/{category}', [DocumentController::class, 'index']);
+
+// Xử lý nút Tải về
+Route::get('/thu-vien/download/{id}', [DocumentController::class, 'download'])->name('document.download');
 require __DIR__ . '/auth.php';

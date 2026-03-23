@@ -9,9 +9,15 @@ use Illuminate\Support\Str;
 
 class ServiceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $services = Service::latest()->get();
+        $query = Service::query();
+
+        // Sắp xếp
+        $sort = $request->input('sort', 'desc');
+        $query->orderBy('created_at', $sort === 'asc' ? 'asc' : 'desc');
+
+        $services = $query->get();
         return view('admin.services.index', compact('services'));
     }
 

@@ -3,74 +3,6 @@
 @section('content')
 @php
 $title = 'Dự án tiêu biểu - Gia Lộc Khang';
-
-// Dữ liệu dự án thực tế từ HSNL Gia Lộc Khang
-$portfolioProjects = [
-[
-'id' => 1,
-'name' => 'Đường Vành Đai Phía Bắc Ninh Thuận',
-'category_id' => 'giao-thong',
-'category_name' => 'Cầu & Đường Giao Thông',
-'client' => 'Sở GTVT Ninh Thuận',
-'image' => '/images/Picture5.png'
-],
-[
-'id' => 2,
-'name' => 'KĐT Biển Bình Sơn - Ninh Chữ',
-'category_id' => 'ha-tang',
-'category_name' => 'Hạ Tầng & Thủy Lợi',
-'client' => 'Ban QLDA Tỉnh Ninh Thuận',
-'image' => '/images/Picture6.png'
-],
-[
-'id' => 3,
-'name' => 'Nhà Máy Điện Mặt Trời Phước Thái',
-'category_id' => 'cong-nghiep',
-'category_name' => 'Công Nghiệp & Dân Dụng',
-'client' => 'Tập đoàn EVN',
-'image' => '/images/Picture7.png'
-],
-[
-'id' => 4,
-'name' => 'Cải Tạo Tuyến Tránh QL.1 Phan Rang',
-'category_id' => 'giao-thong',
-'category_name' => 'Cầu & Đường Giao Thông',
-'client' => 'Bộ Giao Thông Vận Tải',
-'image' => '/images/Picture5.png'
-],
-[
-'id' => 5,
-'name' => 'Hệ Thống Thủy Lợi Sông Cái',
-'category_id' => 'ha-tang',
-'category_name' => 'Hạ Tầng & Thủy Lợi',
-'client' => 'Sở NN & PTNT',
-'image' => '/images/Picture6.png'
-],
-[
-'id' => 6,
-'name' => 'Đường Văn Lâm – Sơn Hải',
-'category_id' => 'giao-thong',
-'category_name' => 'Cầu & Đường Giao Thông',
-'client' => 'UBND Tỉnh Ninh Thuận',
-'image' => '/images/Picture7.png'
-],
-[
-'id' => 7,
-'name' => 'Hạ Tầng Khu Công Nghiệp Thành Hải',
-'category_id' => 'cong-nghiep',
-'category_name' => 'Công Nghiệp & Dân Dụng',
-'client' => 'Ban Quản Lý KCN',
-'image' => '/images/Picture5.png'
-],
-[
-'id' => 8,
-'name' => 'Nâng Cấp Hệ Thống Kênh Tấn Tài',
-'category_id' => 'ha-tang',
-'category_name' => 'Hạ Tầng & Thủy Lợi',
-'client' => 'Sở NN & PTNT',
-'image' => '/images/Picture6.png'
-]
-];
 @endphp
 
 <section class="relative w-full h-[40vh] min-h-[300px] bg-[#003366] overflow-hidden">
@@ -89,16 +21,18 @@ $portfolioProjects = [
              modalImage: '', 
              modalName: '', 
              modalClient: '',
-             openModal(img, name, client) {
+             modalDesc: '',
+             openModal(img, name, client, desc) {
                  this.modalImage = img;
                  this.modalName = name;
                  this.modalClient = client;
+                 this.modalDesc = desc;
                  this.modalOpen = true;
-                 document.body.style.overflow = 'hidden'; // Khóa cuộn trang khi mở modal
+                 document.body.style.overflow = 'hidden'; 
              },
              closeModal() {
                  this.modalOpen = false;
-                 document.body.style.overflow = ''; // Mở lại cuộn trang
+                 document.body.style.overflow = ''; 
              }
          }"
     @keydown.escape.window="closeModal()">
@@ -108,7 +42,7 @@ $portfolioProjects = [
         <div class="text-center max-w-3xl mx-auto mb-12">
             <h2 class="text-[#003366] text-3xl font-black uppercase mb-4">Các Công Trình Đã Thực Hiện</h2>
             <p class="text-gray-600 leading-relaxed text-lg">
-                Hơn 10 năm qua, Gia Lộc Khang tự hào ghi dấu ấn tại hàng loạt dự án trọng điểm khu vực Miền Trung, đáp ứng tiêu chuẩn kỹ thuật khắt khe và tiến độ thi công thần tốc.
+                Hơn 10 năm qua, Gia Lộc Khang tự hào ghi dấu ấn tại hàng loạt dự án trọng điểm, đáp ứng tiêu chuẩn kỹ thuật khắt khe và tiến độ thi công thần tốc.
             </p>
             <div class="w-24 h-1 bg-[#E27121] mx-auto mt-6"></div>
         </div>
@@ -119,34 +53,43 @@ $portfolioProjects = [
                 class="rounded-full border px-6 py-2.5 font-bold uppercase text-sm transition-all duration-300">
                 Tất cả dự án
             </button>
-            <button @click="currentTab = 'giao-thong'"
-                :class="currentTab === 'giao-thong' ? 'bg-[#E27121] text-white border-[#E27121] shadow-md' : 'bg-white text-[#003366] border-gray-200 hover:border-[#003366]'"
+            <button @click="currentTab = 'bridge'"
+                :class="currentTab === 'bridge' ? 'bg-[#E27121] text-white border-[#E27121] shadow-md' : 'bg-white text-[#003366] border-gray-200 hover:border-[#003366]'"
                 class="rounded-full border px-6 py-2.5 font-bold uppercase text-sm transition-all duration-300">
-                Giao Thông
+                Cầu & Đường
             </button>
-            <button @click="currentTab = 'ha-tang'"
-                :class="currentTab === 'ha-tang' ? 'bg-[#E27121] text-white border-[#E27121] shadow-md' : 'bg-white text-[#003366] border-gray-200 hover:border-[#003366]'"
+            <button @click="currentTab = 'urban'"
+                :class="currentTab === 'urban' ? 'bg-[#E27121] text-white border-[#E27121] shadow-md' : 'bg-white text-[#003366] border-gray-200 hover:border-[#003366]'"
                 class="rounded-full border px-6 py-2.5 font-bold uppercase text-sm transition-all duration-300">
-                Hạ Tầng & Thủy Lợi
+                Hạ Tầng & Khu Đô Thị
             </button>
-            <button @click="currentTab = 'cong-nghiep'"
-                :class="currentTab === 'cong-nghiep' ? 'bg-[#E27121] text-white border-[#E27121] shadow-md' : 'bg-white text-[#003366] border-gray-200 hover:border-[#003366]'"
+            <button @click="currentTab = 'factory'"
+                :class="currentTab === 'factory' ? 'bg-[#E27121] text-white border-[#E27121] shadow-md' : 'bg-white text-[#003366] border-gray-200 hover:border-[#003366]'"
                 class="rounded-full border px-6 py-2.5 font-bold uppercase text-sm transition-all duration-300">
-                Công Nghiệp & Dân Dụng
+                Công Nghiệp
             </button>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            @foreach ($portfolioProjects as $project)
-            <div x-show="currentTab === 'all' || currentTab === '{{ $project['category_id'] }}'"
+            @foreach ($projects as $project)
+            @php
+            $catNames = [
+            'bridge' => 'Cầu / Đường',
+            'factory' => 'Công Nghiệp',
+            'urban' => 'Hạ Tầng / Đô thị',
+            ];
+            $categoryName = $catNames[$project->category] ?? 'Dự án';
+            $imageUrl = $project->image ? asset('images/' . $project->image) : asset('images/Picture5.png');
+            @endphp
+            <div x-show="currentTab === 'all' || currentTab === '{{ $project->category }}'"
                 x-transition:enter="transition ease-out duration-500"
                 x-transition:enter-start="opacity-0 transform scale-95"
                 x-transition:enter-end="opacity-100 transform scale-100"
                 class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition duration-500 border border-gray-100 cursor-pointer flex flex-col"
-                @click="openModal('{{ asset($project['image']) }}', '{{ $project['name'] }}', '{{ $project['client'] }}')">
+                @click="openModal('{{ $imageUrl }}', '{{ addslashes($project->title) }}', '{{ addslashes($project->location ?? 'Đang cập nhật') }}', `{{ addslashes($project->description ?? $project->summary ?? '') }}`)">
 
                 <div class="relative h-64 overflow-hidden">
-                    <img src="{{ asset($project['image']) }}" onerror="this.src='{{ asset('images/banner.jpg') }}'" alt="{{ $project['name'] }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    <img src="{{ $imageUrl }}" onerror="this.src='{{ asset('images/banner.jpg') }}'" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
 
                     <div class="absolute inset-0 bg-[#003366]/60 opacity-0 group-hover:opacity-100 transition duration-500 flex items-center justify-center">
                         <div class="w-16 h-16 bg-[#E27121] text-white rounded-full flex items-center justify-center text-2xl transform scale-50 group-hover:scale-100 transition duration-500 delay-100">
@@ -155,19 +98,19 @@ $portfolioProjects = [
                     </div>
 
                     <div class="absolute top-4 left-4 bg-white/90 backdrop-blur text-[#003366] text-xs font-bold px-3 py-1.5 uppercase rounded shadow-sm">
-                        {{ $project['category_name'] }}
+                        {{ $categoryName }}
                     </div>
                 </div>
 
                 <div class="p-6 flex-1 flex flex-col justify-between">
                     <div>
                         <h3 class="text-xl font-black text-[#003366] uppercase mb-2 group-hover:text-[#E27121] transition-colors line-clamp-2">
-                            {{ $project['name'] }}
+                            {{ $project->title }}
                         </h3>
                     </div>
                     <div class="mt-4 pt-4 border-t border-gray-100 flex items-center gap-2 text-sm text-gray-500 font-medium">
-                        <i class="fa-solid fa-building-user text-[#E27121]"></i>
-                        <span>CĐT: {{ $project['client'] }}</span>
+                        <i class="fa-solid fa-location-dot text-[#E27121]"></i>
+                        <span> Vị trí: {{ $project->location ?? 'Đang cập nhật' }}</span>
                     </div>
                 </div>
             </div>
@@ -203,9 +146,10 @@ $portfolioProjects = [
             <div class="p-5 md:p-6 bg-white border-t border-gray-200">
                 <h3 class="font-black text-xl md:text-2xl text-[#003366] uppercase" x-text="modalName"></h3>
                 <p class="text-gray-500 mt-2 font-medium flex items-center gap-2">
-                    <i class="fa-solid fa-building-user text-[#E27121]"></i>
-                    Chủ đầu tư: <span x-text="modalClient"></span>
+                    <i class="fa-solid fa-location-dot text-[#E27121]"></i>
+                    Vị trí: <span x-text="modalClient"></span>
                 </p>
+                <div class="mt-4 text-gray-700 leading-relaxed" x-text="modalDesc"></div>
             </div>
         </div>
     </div>
